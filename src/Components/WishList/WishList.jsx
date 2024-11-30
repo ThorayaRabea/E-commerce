@@ -9,7 +9,7 @@ export default function WishList() {
   let [listOfProducts, setlistOfProducts] = useState([])
   const [loading, setLoading] = useState({});
 
-  let {addProductsToCart}=useContext(CartContext)
+  let {addProductsToCart,setcartNumber,cartNumber}=useContext(CartContext)
   const [currentId, setcurrentId] = useState(0)
   const [loadingCart, setloadingCart] = useState(false)
 
@@ -27,6 +27,7 @@ export default function WishList() {
     setLoading((prev) => ({ ...prev, [idOfProduct]: true }))
     let response= await removeProductFromWishList(idOfProduct)
     if(response.data.status=="success"){
+      setcartNumber(cartNumber-1)
       setlistOfProducts(response.data.data)
     }
     setLoading((prev) => ({ ...prev, [idOfProduct]: false }))
@@ -39,6 +40,7 @@ export default function WishList() {
      let respose= await addProductsToCart(id)
       // console.log(respose.data); 
       if(respose.data.status=='success') {
+        setcartNumber(cartNumber+1)
            toast.success(respose.data.message,{
             position: 'top-right',
             style: {
@@ -67,7 +69,7 @@ return (
     <h2 className='font-semibold text-2xl text-green-500'>My wishList</h2>
   </div>
 
-  <div className="relative overflow-x-auto  sm:rounded-lg">
+  <div className=" overflow-x-auto  sm:rounded-lg">
   <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
   
     <tbody>

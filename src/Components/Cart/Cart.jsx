@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 
 export default function Cart() {
 
-  let {getLoggedUserCart,updateCartProductQuantity,deleteCartItem,deleteUserCart}=useContext(CartContext)
+  let {getLoggedUserCart,updateCartProductQuantity,deleteCartItem,deleteUserCart,setcartNumber,cartNumber}=useContext(CartContext)
 
   const [CartDetails,setCartDetails]=useState(null)
   const [loading, setLoading] = useState({});
@@ -35,6 +35,7 @@ export default function Cart() {
     setLoading((prev) => ({ ...prev, [id]: true }))
     let response= await deleteCartItem(id)
     if(response.data.status=='success'){
+      setcartNumber(cartNumber-1)
       setCartDetails(response.data.data)  
     }
     setLoading((prev) => ({ ...prev, [id]: false }))
@@ -44,6 +45,7 @@ export default function Cart() {
     let response =await deleteUserCart()
      //console.log(response);
     if(response.data.message=='success'){
+      setcartNumber(0)
       setCartDetails(null)  
     }
     
@@ -69,7 +71,7 @@ export default function Cart() {
     <h2 className='font-normal text-2xl'>total number of items : <span className='text-green-400'> {CartDetails?.products.length}</span></h2>
   </div>
 
-<div className="relative overflow-x-auto  sm:rounded-lg">
+<div className=" overflow-x-auto  sm:rounded-lg">
   <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
    
     <tbody>

@@ -1,6 +1,8 @@
 import axios from 'axios'
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
+import { CartContext } from '../../context/CartContext'
+import useProsucts from '../../Hooks/useProsucts'
 
 export default function ProductDetails() {
     let {id,category}=useParams()
@@ -8,6 +10,9 @@ export default function ProductDetails() {
   const [relatedProsucts, setrelatedProsucts] = useState([])
   const [imgs, setimgs] = useState([])
   const [activeIndex, setActiveIndex] = useState(0);
+
+
+  
 
 
 async function getSpecificProduct(id) {
@@ -103,10 +108,10 @@ useEffect( ()=>{
         <h3>{Product?.price} EGP</h3>
         <h3 ><i className='fas fa-star text-yellow-400'></i>{Product?.ratingsAverage}</h3>
      </div>
-     <div className='text-end mb-3'><i className='fas fa-heart text-3xl cursor-pointer'></i></div>
+     {/* <div className='text-end mb-3'><i className='fas fa-heart text-3xl cursor-pointer'></i></div>
      <div className='text-center mb-3 '>
-        <button className='w-full bg-green-600 rounded-lg text-white btn py-1 '>+ Add</button>
-     </div>
+        <button className='w-full bg-green-600 rounded-lg text-white btn py-1 ' >+ Add</button>
+     </div> */}
 
 
     </div>
@@ -117,7 +122,7 @@ useEffect( ()=>{
 
 
 
-<div className="row ">
+{/* <div className="row ">
          {relatedProsucts.length>0? relatedProsucts.map( (product)=>{
             return <div className='w-full mb-20 px-3 product me-3 md:w-[30%] lg:w-[23%]' key={product.id}>
                 <Link to={`/productdetails/${product.id}/${product.category.name}`}>
@@ -137,12 +142,7 @@ useEffect( ()=>{
             </div>
          } ) :<span className="loader"></span>}
          
-       </div>
-
-
-
-
-
+       </div> */}
 
 
     </>

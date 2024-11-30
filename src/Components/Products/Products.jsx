@@ -8,66 +8,7 @@ import toast from 'react-hot-toast';
 import { WishListContext } from '../../context/WishListContext'
 export default function Products() {
 
-  // let {addProductsToCart}=useContext(CartContext)
-
-  // async function addToCart(id){
-  //    let respose= await addProductsToCart(id)
-  //     // console.log(respose.data); 
-  //     if(respose.data.status=='success') {
-  //          toast.success(respose.data.message,{
-  //           position: 'top-right',
-  //           style: {
-  //             padding:'30px'
-  //           },
-  //          })
-  //     } else{
-  //       toast.error(respose.data.message)
-  //     }
-  // }
-
-
-  // let {data,isError,error,isLoading}=useProsucts()
-
-  // if(isError){
-  //   return <h3>{error}</h3>
-  // }
-  // if(isLoading){
-  //   return <div className='flex justify-center items-center bg-slate-100'><span className="loader"></span></div>
-  // }
-  
-
-
-
-  // return (
-  //   <>
-  //      <div className="row mt-8">
-  //        { data?.map( (product)=>{
-  //           return <div className='w-full mb-20 px-3 product me-3 md:w-[30%] lg:w-[23%]' key={product.id}>
-  //               <Link to={`/productdetails/${product.id}/${product.category.name}`}>
-  //               <img src={product.imageCover} alt="" className='w-full' />
-  //               <h3 className='text-green-500'>{product.category.name}</h3>
-  //               <h3 className='font-bold mb-2'>{product.title.split(' ').slice(0,2).join(' ')}</h3>
-  //               <div className='flex justify-between mb-3'>
-  //                   <h3>{product.price} EGP</h3>
-  //                   <h3 ><i className='fas fa-star text-yellow-400'></i>{product.ratingsAverage}</h3>
-  //               </div></Link>
-  //               <div className='text-end'><i className='fas fa-heart text-3xl cursor-pointer'></i></div>
-                
-  //               <div className='text-center mb-3 '>
-  //                   <button onClick={  ()=>addToCart(product.id) } className='w-[80%] bg-green-600 rounded-lg text-white btn py-1 '>+ Add</button>
-  //               </div>
-                
-  //           </div>
-  //        } ) }
-         
-  //      </div>
-  //   </>
-  // )
-
-
-
-
-  let {addProductsToCart}=useContext(CartContext)
+  let {addProductsToCart,setcartNumber,cartNumber}=useContext(CartContext)
    
   ///week 4 part 7
   const [loading, setloading] = useState(false)
@@ -108,6 +49,7 @@ export default function Products() {
      let respose= await addProductsToCart(id)
       // console.log(respose.data); 
       if(respose.data.status=='success') {
+        setcartNumber(cartNumber+1)
            toast.success(respose.data.message,{
             position: 'top-right',
             style: {
@@ -138,7 +80,7 @@ export default function Products() {
        <div className="row mt-8">
          { data?.map( (product)=>{
             return <div className='w-full mb-20 px-3 product me-3 md:w-[30%] lg:w-[23%]' key={product.id}>
-                <Link to={`productdetails/${product.id}/${product.category.name}`}>
+                <Link to={`/productdetails/${product.id}/${product.category.name}`}>
                 <img src={product.imageCover} alt="" className='w-full' />
                 <h3 className='text-green-500'>{product.category.name}</h3>
                 <h3 className='font-bold mb-2'>{product.title.split(' ').slice(0,2).join(' ')}</h3>

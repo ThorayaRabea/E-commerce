@@ -9,7 +9,7 @@ import { WishListContext } from '../../context/WishListContext'
 
 export default function RecentProducts() {
 
-  let {addProductsToCart}=useContext(CartContext)
+  let {addProductsToCart,setcartNumber,cartNumber}=useContext(CartContext)
    
   ///week 4 part 7
   const [loading, setloading] = useState(false)
@@ -50,6 +50,7 @@ export default function RecentProducts() {
      let respose= await addProductsToCart(id)
       // console.log(respose.data); 
       if(respose.data.status=='success') {
+        setcartNumber(cartNumber+1)
            toast.success(respose.data.message,{
             position: 'top-right',
             style: {

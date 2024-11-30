@@ -28,6 +28,8 @@ let myValidation=Yup.object().shape({
  let navigate=useNavigate()
  async function handleRegister(values){
      await axios.post('https://ecommerce.routemisr.com/api/v1/auth/signup',values).then( (res)=>{
+      console.log(res)
+      
       if(res.data.message=="success"){
         localStorage.setItem("UserToken",res.data.token)
         /////////////////////////NEW///////

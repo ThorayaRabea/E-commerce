@@ -7,7 +7,8 @@ export default function CartContextProvider(props){
 
      let headers={token:localStorage.getItem('UserToken')}
      const [cartId, setcartId] = useState('')
-     
+     const [cartNumber, setcartNumber] = useState(0)
+
     function addProductsToCart(productId){
        return  axios.post(
         `https://ecommerce.routemisr.com/api/v1/cart`,
@@ -20,9 +21,9 @@ export default function CartContextProvider(props){
    async function getLoggedUserCart(){
        return await axios.get('https://ecommerce.routemisr.com/api/v1/cart',{headers})
         .then((res)=>{
-            console.log(res.data.data._id)
+            console.log(res.data.numOfCartItems)
+            setcartNumber(res.data.numOfCartItems)
             setcartId(res.data.data._id)
-            allOrders(cartId)
             return res;
         })
         .catch((err)=>err)
@@ -55,9 +56,8 @@ export default function CartContextProvider(props){
     }
 
     function allOrders(cartId) {
-    return axios.get(`https://ecommerce.routemisr.com/api/v1/orders/user/${cartId}`,{headers})
+    return axios.get(`https://ecommerce.routemisr.com/api/v1/orders/${cartId}`,{headers})
     .then((res)=>{
-        console.log('hello')
         return res
     })
     .catch((err)=>err)
@@ -65,9 +65,10 @@ export default function CartContextProvider(props){
 
 useEffect(()=>{
     getLoggedUserCart()
+    
 },[])
 
-    return <CartContext.Provider value={  {addProductsToCart,getLoggedUserCart,updateCartProductQuantity,deleteCartItem,deleteUserCart,checkOut,cartId,allOrders} }>
+    return <CartContext.Provider value={  {addProductsToCart,getLoggedUserCart,updateCartProductQuantity,deleteCartItem,deleteUserCart,checkOut,cartId,allOrders,cartNumber,setcartNumber} }>
         {props.children}
     </CartContext.Provider>
 }
